@@ -1,0 +1,41 @@
+<project name="twitter api test" default="all" basedir=".">
+
+  <!-- set property -->
+  <property file="build.properties" />
+  <path id="build.lib">
+    <fileset dir="./lib" includes="*.jar" />
+  </path>
+
+  <target name="all" depends="init,compile,copy" />
+
+  <!-- Initialize -->
+  <target name="init">
+    <mkdir dir="./build" />
+  </target>
+
+  <!-- compile java sources -->
+  <target name="compile">
+    <javac srcdir="./src" destdir="./build"
+      classpathref="build.lib"
+      encoding="utf-8"
+      debug="on" optimize="off" deprecation="off" />
+  </target>
+
+  <target name="copy">
+    <copy todir="./build">
+      <fileset dir="./src">
+      </fileset>
+    </copy>
+  </target>
+
+  <!-- clean work file -->
+  <target name="clean">
+    <delete dir="./build" />
+  </target>
+
+  <target name="run">
+      <java classname="myclass.MyTweet"
+        classpathref="build.lib"
+        classpath="./build" />
+  </target>
+</project>
