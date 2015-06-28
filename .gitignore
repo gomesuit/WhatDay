@@ -2,3 +2,4 @@ images
 *.log
 build
 src/twitter4j.properties
+/bin/

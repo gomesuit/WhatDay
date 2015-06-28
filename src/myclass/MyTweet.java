@@ -1,14 +1,9 @@
 package myclass;
 
-import myclass.SearchWikiWord;
-
 import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
-import twitter4j.User;
-import twitter4j.Query;
-import twitter4j.QueryResult;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -32,31 +27,17 @@ public class MyTweet
         }
 
         twitter = new TwitterFactory().getInstance();
-        word = new SearchWikiWord(TODAY_KEYWORD).getWord();
+        word = new WikipediaApi(TODAY_KEYWORD).getWord();
         header = getToday();
 
         sentenceTweet();
-
-        //ユーザ情報取得
-        //User user = twitter.verifyCredentials();
-        //System.out.println("なまえ　　　：" + user.getName());
-        //System.out.println("ひょうじ名　：" + user.getScreenName());
-        //System.err.println("ふぉろー数　：" + user.getFriendsCount());
-        //System.out.println("ふぉろわー数：" + user.getFollowersCount());
-      
-        //ついーとしてみる
-        //tweet(twitter, word.substring(0, 140));
-        //System.out.println(word);
-
-        //文字列検索
-        //search(twitter, "comico");
     }
 
     private static void sentenceTweet() throws TwitterException{
         String buff;
         String[] strs = word.split("\n");
         Integer tweCnt = 0;
-        Stack stack = new Stack();
+        Stack<String> stack = new Stack<String>();
         Status status;
 
         buff = strs[0];
@@ -79,14 +60,6 @@ public class MyTweet
             //System.out.println((String)stack.pop());
             status = twitter.updateStatus((String)stack.pop());
             System.out.println("Successfully updated the status to [\n" + status.getText() + "\n].");
-        }
-    }
-
-    private static void search(Twitter twitter, String str) throws TwitterException{
-        Query query = new Query(str);
-        QueryResult result = twitter.search(query);
-        for (Status status : result.getTweets()) {
-            System.out.println("@" + status.getUser().getScreenName() + ":" + status.getText());
         }
     }
 
